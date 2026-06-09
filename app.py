@@ -42,6 +42,7 @@ knn_model = joblib.load("../ML/ride_match_model.pkl")
 pickup_encoder = LabelEncoder()
 destination_encoder = LabelEncoder()
 time_encoder = LabelEncoder()
+
 vehicle_encoder = LabelEncoder()
 
 # Training dataset load
