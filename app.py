@@ -36,7 +36,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 # Load trained model
-knn_model = joblib.load("../ML/ride_match_model.pkl")
+knn_model = joblib.load("ML/ride_match_model.pkl")
 
 # Encoders
 pickup_encoder = LabelEncoder()
@@ -45,7 +45,7 @@ time_encoder = LabelEncoder()
 vehicle_encoder = LabelEncoder()
 
 # Training dataset load
-dataset = pd.read_csv("../ML/dataset.csv")
+dataset = pd.read_csv("ML/dataset.csv")
 
 pickup_encoder.fit(dataset["pickup"])
 destination_encoder.fit(dataset["destination"])
@@ -687,6 +687,7 @@ def search_rides():
         rides=rides,
         ride_locations=ride_locations
     )
+
 @app.route('/book_ride/<int:ride_id>')
 def book_ride(ride_id):
 
