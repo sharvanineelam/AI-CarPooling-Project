@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Ride Details</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="home-body">
+
+<section class="container py-5">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-8">
+
+<div class="glass-card p-5">
+
+<h2 class="text-light mb-4">
+
+🚘 Ride Details
+
+</h2>
+
+<p class="text-light">
+📍 <strong>From:</strong> {{ ride.source }}
+</p>
+
+<p class="text-light">
+🏁 <strong>To:</strong> {{ ride.destination }}
+</p>
+
+<p class="text-light">
+📅 <strong>Date:</strong> {{ ride.date }}
+</p>
+
+<p class="text-light">
+⏰ <strong>Time:</strong> {{ ride.time }}
+</p>
+
+<p class="text-light">
+🚘 <strong>Vehicle:</strong> {{ ride.vehicle }}
+</p>
+
+<p class="text-light">
+💰 <strong>Price:</strong> ₹{{ ride.price }}
+</p>
+
+<p class="text-light">
+💺 <strong>Seats:</strong> {{ ride.seats }}
+</p>
+
+<p class="text-light">
+📍 <strong>Pickup Point:</strong> {{ ride.pickup }}
+</p>
+
+<p class="text-light">
+👤 <strong>Driver:</strong> {{ user.name }}
+</p>
+
+<p class="text-light">
+📞 <strong>Phone:</strong> {{ ride.phone }}
+</p>
+
+<p class="text-light">
+⚧ <strong>Gender Preference:</strong> {{ ride.gender }}
+</p>
+
+<div class="mt-4 d-flex gap-3">
+
+<a href="/book_ride/{{ ride.id }}"
+   class="custom-btn flex-fill text-center">
+
+    Book Ride
+
+</a>
+
+<a href="/search_rides"
+   class="btn btn-secondary flex-fill">
+
+    Back
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="glass-card mt-4 p-4">
+
+    <h3 class="text-light mb-3">
+        ⭐ Reviews
+    </h3>
+
+    {% if reviews %}
+
+        {% for review in reviews %}
+
+        <div class="mb-3">
+
+            <h5 class="gradient-text">
+                {{ review.rating }}/5 ⭐
+            </h5>
+
+            <p class="text-light">
+                {{ review.review }}
+            </p>
+
+            <hr>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p class="text-light">
+            No reviews yet.
+        </p>
+
+    {% endif %}
+
+</div>
+
+</section>
+
+</body>
+
+</html>
