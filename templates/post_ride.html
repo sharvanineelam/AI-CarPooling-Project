@@ -109,10 +109,11 @@
                                 Date
                             </label>
 
-                            <input type="date"
-                                   name="date"
-                                   class="form-control custom-input"
-                                   required>
+                           <input type="date"
+       id="ride_date"
+       name="date"
+       class="form-control custom-input"
+       required>
 
                         </div>
 
@@ -122,11 +123,11 @@
                                 Time
                             </label>
 
-                            <input type="time"
-                                   name="time"
-                                   class="form-control custom-input"
-                                   required>
-
+                           <input type="time"
+       id="ride_time"
+       name="time"
+       class="form-control custom-input"
+       required>
                         </div>
 
                         <div class="col-md-6">
@@ -281,6 +282,15 @@
         });
 
     }, 3000);
+    // Disable previous dates
+const today = new Date().toISOString().split("T")[0];
+document.getElementById("ride_date").setAttribute("min", today);
+
+// Auto close time picker after selection
+document.getElementById("ride_time").addEventListener("change", function () {
+    console.log("Time Selected");
+    this.blur();
+});
 
 </script>
 
