@@ -631,6 +631,7 @@ disabled>
     </h2>
 
     <div id="rideMap"></div>
+    <div id="routeLegend" class="mt-3"></div>
 
 </div>
 </section>
@@ -664,12 +665,10 @@ disabled>
 
 </script>
 <script>
-
     const map = L.map('rideMap').setView(
         [17.3850, 78.4867],
         7
     );
-
     L.tileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
@@ -677,21 +676,125 @@ disabled>
                 '&copy; OpenStreetMap contributors'
         }
     ).addTo(map);
-
     const rides =
     {{ ride_locations | tojson }};
+    console.log(JSON.stringify(rides, null, 2));
 
-    rides.forEach((ride) => {
 
-        L.marker(ride.coords)
-            .addTo(map)
-            .bindPopup(
-                `<b>${ride.place}</b><br>Ride Available 🚘`
-            );
 
+   
+    // Route Line
+   const routeColors = [
+    "red",
+    "green",
+    "blue",
+    "orange",
+    "purple",
+    "brown",
+    "black",
+    "pink",
+    "yellow",
+    "cyan",
+    "magenta",
+    "lime",
+    "teal",
+    "indigo",
+    "violet",
+    "gold",
+    "coral",
+    "navy",
+    "maroon",
+    "olive",
+    "crimson",
+    "turquoise",
+    "chocolate",
+    "darkgreen",
+    "darkblue",
+    "deeppink",
+    "orangered",
+    "slateblue",
+    "darkcyan",
+    "darkviolet"
+];
+const legendItems = [];
+const bounds = [];
+rides.forEach((ride, index) => {
+    bounds.push(ride.source_coords);
+bounds.push(ride.destination_coords);
+     // Source Marker
+    L.marker(ride.source_coords)
+        .addTo(map)
+        .bindPopup(
+            `<b>Source:</b> ${ride.source}`
+        );
+
+    // Destination Marker
+    L.marker(ride.destination_coords)
+        .addTo(map)
+        .bindPopup(
+            `<b>Destination:</b> ${ride.destination}`
+        );
+
+    
+
+     const color = routeColors[index % routeColors.length];
+
+    legendItems.push(`
+    <div style="margin-bottom:6px;">
+        <span style="
+            display:inline-block;
+            width:15px;
+            height:15px;
+            background:${color};
+            margin-right:8px;
+            border-radius:3px;
+        "></span>
+        ${ride.source} → ${ride.destination}
+    </div>
+    `);
+
+
+    L.polyline(
+        [ride.source_coords, ride.destination_coords],
+        {
+            color: color,
+            weight: 6
+        }
+    ).addTo(map);
+
+
+
+
+    // Distance Calculation
+    const lat1 = ride.source_coords[0];
+    const lon1 = ride.source_coords[1];
+    const lat2 = ride.destination_coords[0];
+    const lon2 = ride.destination_coords[1];
+
+    const distance =
+        Math.sqrt(
+            Math.pow(lat2 - lat1, 2) +
+            Math.pow(lon2 - lon1, 2)
+        ) * 111;
+
+    // Mid Point
+    const midLat = (lat1 + lat2) / 2;
+    const midLon = (lon1 + lon2) / 2;
+
+    L.marker([midLat, midLon])
+    .addTo(map)
+    .bindPopup(
+        `<b>${ride.source} → ${ride.destination}</b><br>
+        Distance: ${distance.toFixed(1)} km`
+    );
     });
-
+    map.fitBounds(bounds);
+    document.getElementById("routeLegend").innerHTML = `
+<div class="glass-card p-3 mt-3">
+    <h5>🗺 Route Legend</h5>
+    ${legendItems.join("")}
+</div>
+`;
 </script>
 </body>
-
 </html>

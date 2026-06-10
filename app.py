@@ -671,17 +671,29 @@ def search_rides():
         "Bangalore": [12.9716, 77.5946],
         "Mumbai": [19.0760, 72.8777],
         "Chennai": [13.0827, 80.2707],
-        "Delhi": [28.7041, 77.1025]
+        "Delhi": [28.7041, 77.1025],
+        "Jaipur": [26.9124, 75.7873],
+"Agra": [27.1767, 78.0081],
+"Pune": [18.5204, 73.8567],
+"Vijayawada": [16.5062, 80.6480],
+"Vizag": [17.6868, 83.2185],
+"Warangal": [17.9689, 79.5941],
+"Goa": [15.2993, 74.1240],
+"Tirupati": [13.6288, 79.4192],
+"Chandigarh": [30.7333, 76.7794]
     }
 
     for ride in rides:
 
-        if ride.source in city_coords:
+        if ride.source in city_coords and ride.destination in city_coords:
 
-            ride_locations.append({
-                "place": ride.source,
-                "coords": city_coords[ride.source]
-            })
+         ride_locations.append({
+    "source": ride.source,
+    "destination": ride.destination,
+    "source_coords": city_coords[ride.source],
+    "destination_coords": city_coords[ride.destination]
+    }) 
+    print("RIDE LOCATIONS =", ride_locations)
 
     return render_template(
         'search_rides.html',
