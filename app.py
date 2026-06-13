@@ -420,7 +420,7 @@ Time: {ride.time}
 Thank you for using AI Car Pooling 🚗
 """
 
-        mail.send(msg)
+       # mail.send(msg)
         notification = Notification(
                 user_id=session['user_id'],
                 message="🚗 Your ride has been posted successfully."
@@ -745,7 +745,7 @@ Time: {ride.time}
 Thank you for using AI Car Pooling 🚗
 """
 
-        mail.send(msg)
+      #  mail.send(msg)
 
         db.session.commit()
 
